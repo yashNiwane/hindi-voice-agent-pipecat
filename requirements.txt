@@ -1,0 +1,29 @@
+# Core pipecat pipeline & transports
+pipecat-ai[silero,rnnoise,webrtc,runner]>=0.0.50
+aiortc>=1.9.0
+fastapi>=0.115.0
+uvicorn>=0.30.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0
+loguru>=0.7.0
+aiohttp>=3.9.0
+
+# Deep learning & inference engines
+torch>=2.2.0
+torchaudio>=2.2.0
+transformers>=4.48.0
+accelerate>=0.28.0
+soundfile>=0.12.1
+numpy<2.0.0,>=1.24.0
+
+# LLM inference (Gemma 4 E2B Q4 GGUF & OpenAI compatibility layer)
+llama-cpp-python>=0.2.85
+openai>=1.30.0
+
+# Audio processing & noise cancellation
+pyrnnoise>=0.1.1
+soxr>=0.3.7
+
+# Utilities
+tqdm>=4.66.0
+huggingface_hub>=0.23.0
