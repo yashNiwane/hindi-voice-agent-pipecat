@@ -84,11 +84,8 @@ async def run_bot(transport: BaseTransport, runner_args: RunnerArguments):
     )
 
     # Build the sequential streaming pipeline
-    pipeline_steps = [transport.input()]
-    if noise_filter is not None:
-        pipeline_steps.append(noise_filter)
-
-    pipeline_steps.extend([
+    pipeline = Pipeline([
+        transport.input(),
         asr,
         user_aggregator,
         llm,
@@ -96,8 +93,6 @@ async def run_bot(transport: BaseTransport, runner_args: RunnerArguments):
         transport.output(),
         assistant_aggregator
     ])
-
-    pipeline = Pipeline(pipeline_steps)
 
     worker = PipelineWorker(
         pipeline,
@@ -131,6 +126,7 @@ async def run_bot(transport: BaseTransport, runner_args: RunnerArguments):
 async def bot(runner_args: RunnerArguments):
     """Pipecat runner entry point."""
     webrtc_connection: SmallWebRTCConnection = runner_args.webrtc_connection
+    noise_filter = get_noise_filter(enabled=settings.enable_rnnoise)
 
     transport = SmallWebRTCTransport(
         webrtc_connection=webrtc_connection,
@@ -139,6 +135,7 @@ async def bot(runner_args: RunnerArguments):
             audio_out_enabled=True,
             audio_in_sample_rate=settings.audio_sample_rate,
             audio_out_sample_rate=settings.audio_sample_rate,
+            audio_in_filter=noise_filter,
         ),
     )
 
