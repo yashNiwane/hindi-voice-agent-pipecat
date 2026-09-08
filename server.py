@@ -42,6 +42,15 @@ small_webrtc_handler = SmallWebRTCRequestHandler(
 # Background tasks reference tracking
 _active_sessions = set()
 
+@app.on_event("startup")
+async def startup_warmup():
+    logger.info("Pre-warming models on GPU during server startup...")
+    try:
+        bot.get_shared_models()
+        logger.info("All AI models pre-warmed successfully!")
+    except Exception as e:
+        logger.error(f"Error pre-warming models: {e}")
+
 @app.get("/")
 async def index():
     """Serves the WebRTC test client UI."""

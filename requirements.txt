@@ -15,6 +15,7 @@ transformers>=4.48.0
 accelerate>=0.28.0
 soundfile>=0.12.1
 numpy<2.0.0,>=1.24.0
+qwen-asr>=0.0.6
 
 # LLM inference (Gemma 4 E2B Q4 GGUF & OpenAI compatibility layer)
 llama-cpp-python>=0.2.85
